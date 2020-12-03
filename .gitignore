@@ -1,0 +1,5 @@
+*_credentials
+*.exe
+.terraform/
+*.tfstate
+*.tfstate.backup

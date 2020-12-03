@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/home/heprado/.dotnet/store/|arch|/|tfm|",
+      "/home/heprado/.nuget/packages"
+    ]
+  }
+}

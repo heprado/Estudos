@@ -1,0 +1,12 @@
+<roteadores>
+    <dc1>
+        <ipaddr>"192.168.0.1"</ipaddr>
+        <netmask>"255.255.255.0"</netmask>
+        <defaultroute>213.34.23.45</defaultroute>
+    </dc1>
+    <dc2>
+        <ipaddr>192.168.0.2</ipaddr>
+        <netmask>255.255.255.0</netmask>
+        <defaultroute>192.168.0.1</defaultroute>
+    </dc2>
+</roteadores>

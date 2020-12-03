@@ -1,0 +1,13 @@
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.exe
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.deps.json
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.runtimeconfig.json
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.runtimeconfig.dev.json
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.dll
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\bin\Debug\netcoreapp3.1\Enum.pdb
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.csproj.CoreCompileInputs.cache
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.AssemblyInfoInputs.cache
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.AssemblyInfo.cs
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.dll
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.pdb
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.genruntimeconfig.cache
+C:\Users\heprado\Documents\GitHub\Tidebinder\Studies\CSharp Learning\Enum\Enum\obj\Debug\netcoreapp3.1\Enum.csprojAssemblyReference.cache
