@@ -1,0 +1,12 @@
+{
+    "usuarios": {
+        "Henrique": {
+            "nome": "Henrique Prado",
+            "idade": 22
+        },
+        "Lara": {
+            "nome": "Lara Ayumi Nagamatsu",
+            "idade": 22
+        }
+    }
+}

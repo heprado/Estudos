@@ -1,0 +1,12 @@
+*_credentials
+*.exe
+.terraform/
+*.tfstate
+*.tfstate.backup
+.vs/
+bin/
+obj/
+credentials
+*.pem
+*.pub
+*.log
