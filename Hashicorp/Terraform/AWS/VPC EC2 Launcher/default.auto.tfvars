@@ -13,3 +13,6 @@ shared_credentials_path = "/home/tidebinder/Github/Studies/Hashicorp/Terraform/A
 
 aws_region = "us-east-1"
 
+/*Todos os recursos vão ser criados com esse prefixo para facil idenficação na AWS.*/
+
+prefix_name = "heprado"
