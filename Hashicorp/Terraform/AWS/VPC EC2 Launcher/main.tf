@@ -33,5 +33,22 @@ resource "aws_key_pair" "public_key" {
     public_key = data.local_file.read_key.content
 }
 
+/*Criando o VPC*/
+resource "aws_vpc" "vpc" {
+    cidr_block = var.vpc_cidr_block
+    tags = {
+        "Name" = "${var.prefix_name}_vpc"
+    }
+}
+/*Cria uma ou varias subnets dentro do VPC, de acordo com a quantidade dentro da lista vpc_subnets*/
+resource "aws_subnet" "vpc_subnet"{
+    count = length(var.vpc_subnets)
+    cidr_block = var.vpc_subnets[count.index]
+    vpc_id = aws_vpc.vpc.id
+    map_public_ip_on_launch = "true"
+    tags = {
+        "Name" = "${var.prefix_name}_${var.vpc_subnets[count.index]}_subnet"
+    }
+}
 
 
