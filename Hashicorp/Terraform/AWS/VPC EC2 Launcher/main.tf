@@ -51,4 +51,64 @@ resource "aws_subnet" "vpc_subnet"{
     }
 }
 
+/*Cria um internet gateway para termos saida para a internet do VPC*/
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "${var.prefix_name}_igw"
+  }
+}
+
+/*Criando rota default ipv4 para associar a tabela de roteamento default*/
+
+resource "aws_route" "ipv4_default_route" {
+    destination_cidr_block = "0.0.0.0/0"
+    route_table_id = aws_vpc.vpc.main_route_table_id
+    gateway_id = aws_internet_gateway.igw.id
+}
+
+/*Criando rota default ipv6 para associar a tabela de roteamento default*/
+
+resource "aws_route" "ipv6_default_route" {
+    destination_ipv6_cidr_block = "::/0"
+    route_table_id = aws_vpc.vpc.main_route_table_id
+    gateway_id = aws_internet_gateway.igw.id
+}
+
+/*Associando as subnets a tabela de roteamento default do VPC*/
+
+resource "aws_route_table_association" "subnets_associantion" {
+  count = length(var.vpc_subnets)
+  subnet_id      = aws_subnet.vpc_subnet[count.index].id
+  route_table_id = aws_vpc.vpc.main_route_table_id
+}
+
+/*Criando security groups*/
+resource "aws_security_group" "permit_all" {
+  name        = "allow_tls"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = aws_vpc.vpc.id
+
+  ingress {
+    description = "Permit all ingress"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_tls"
+  }
+}
+
+
 
