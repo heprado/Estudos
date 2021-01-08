@@ -84,31 +84,65 @@ resource "aws_route_table_association" "subnets_associantion" {
   route_table_id = aws_vpc.vpc.main_route_table_id
 }
 
-/*Criando security groups*/
-resource "aws_security_group" "permit_all" {
-  name        = "allow_tls"
-  description = "Allow TLS inbound traffic"
+/*Criando security group para as instancias*/
+resource "aws_security_group" "security_group" {
+  name        = "${var.prefix_name}_security_group"
+  description = "Created by Terraform"
   vpc_id      = aws_vpc.vpc.id
 
-  ingress {
-    description = "Permit all ingress"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = {
-    Name = "allow_tls"
+    Name = "${var.prefix_name}_security_group"
+  }
+}
+
+resource "aws_security_group_rule" "sg_ingress_rule" {
+  count = length(var.security_group_ingress_ports)
+  type              = "ingress"
+  from_port         = var.security_group_ingress_ports[count.index]
+  to_port           = var.security_group_ingress_ports[count.index]
+  protocol          = var.security_group_ingress_protocol[count.index]
+  cidr_blocks       = var.security_group_ingress_cidr
+  security_group_id = aws_security_group.security_group.id
+}
+
+resource "aws_security_group_rule" "sg_egress_rule" {
+  count = length(var.security_group_egress_ports)
+  type              = "egress"
+  from_port         = var.security_group_egress_ports[count.index]
+  to_port           = var.security_group_egress_ports[count.index]
+  protocol          = var.security_group_egress_protocol[count.index]
+  cidr_blocks       = var.security_group_egress_cidr
+  security_group_id = aws_security_group.security_group.id
+}
+
+resource "aws_network_acl" "net_acl" {
+  vpc_id = aws_vpc.vpc.id
+  subnet_ids = var.vpc_subnets 
+  tags = {
+    Name = "${var.prefix_name}_net_acl"
   }
 }
 
 
+resource "aws_network_acl_rule" "net_ingress_rule" {
+  network_acl_id = aws_network_acl.net_acl.id
+  rule_number    = 200
+  egress         = false
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = aws_vpc.foo.cidr_block
+  from_port      = 22
+  to_port        = 22
+}
+
+resource "aws_network_acl_rule" "net_egress_rule" {
+  network_acl_id = aws_network_acl.net_acl.id
+  rule_number    = var.net_egress_rule_number
+  egress         = true
+  protocol       = var.net_egress_protocol
+  rule_action    = "allow"
+  cidr_block     = aws_vpc.foo.cidr_block
+  from_port      = 22
+  to_port        = 22
+}
 
