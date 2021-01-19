@@ -29,14 +29,15 @@ vpc_subnets = ["172.16.1.0/24", "172.16.2.0/24"]
 
 security_group_ingress_ports = [22,443,0]
 
-/*Lista de CIDRs que esse tráfego Ingress sera permitido dentro do Security Group*/
-
-security_group_ingress_cidr = ["0.0.0.0/0"]
-
 /*Valores possiveis são "tcp","udp","icmp","-1"(Todos os protocolos), os valores precisam estar na mesma ordem da porta que você quer liberar
 na variavel security_group_ingress_ports*/
 
 security_group_ingress_protocol = ["tcp","tcp","icmp"]
+
+/*Lista de CIDRs que esse tráfego Ingress sera permitido dentro do Security Group*/
+
+security_group_ingress_cidr = ["0.0.0.0/0"]
+
 
 /*Portas que serão liberadas para tráfego egress dentro do Security Group*/
 

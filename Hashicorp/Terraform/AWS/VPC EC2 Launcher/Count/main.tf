@@ -115,16 +115,16 @@ resource "aws_security_group_rule" "sg_egress_rule" {
   security_group_id = aws_security_group.security_group.id
 }
 
-resource "aws_network_acl" "net_acl" {
+/*resource "aws_network_acl" "net_acl" {
   vpc_id = aws_vpc.vpc.id
-  subnet_ids = var.vpc_subnets 
+  subnet_ids =
   tags = {
     Name = "${var.prefix_name}_net_acl"
   }
-}
+}*/
 
 
-resource "aws_network_acl_rule" "net_ingress_rule" {
+/*resource "aws_network_acl_rule" "net_ingress_rule" {
   network_acl_id = aws_network_acl.net_acl.id
   rule_number    = 200
   egress         = false
@@ -145,4 +145,8 @@ resource "aws_network_acl_rule" "net_egress_rule" {
   from_port      = 22
   to_port        = 22
 }
-
+*/
+output "igw_id" {
+  value = aws_internet_gateway.igw.id
+  description = "ID do IGW criado na AWS"
+}
