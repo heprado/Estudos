@@ -23,4 +23,13 @@ variable subnets {
     default = ["192.168.1.0/24","192.168.2.0/24"]
 }
 
+variable ingress_security_configs {
+    type = map
+    default = {
+        "ingress_ports" = ["80","443"]
+        "protocol" = ["tcp","tcp","udp","udp"]
+        "cidr_blocks" = ["0.0.0.0/0"]
+    }
+}
+
 

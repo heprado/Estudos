@@ -95,3 +95,37 @@ resource "aws_network_acl" "net_acl" {
   }
 }
 
+
+resource "aws_default_route_table" "default_route_table" {
+  default_route_table_id = aws_vpc.vpc.default_route_table_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "${var.prefix_name}_default_route_table"
+  }
+}
+
+resource "aws_route_table_association" "route_table_assoc" {
+  for_each = toset(var.subnets)
+  subnet_id      = aws_subnet.subnets[each.key].id
+  route_table_id = aws_default_route_table.default_route_table.id
+}
+
+resource "aws_security_group" "security_group" {
+    name = "${var.prefix_name}_security_group"
+    vpc_id = aws_vpc.vpc.id   
+}
+/*
+resource "aws_security_group_rule" "security_group_ingress_rules" {
+    for_each = toset(var.ingress_security_configs["protocol"])
+    type              = ingress
+    from_port         = ver como fazer para jogar as portas aqui
+    to_port           = ver como fazer para jogar as portas aqui
+    protocol          = each.key
+    cidr_blocks       = var.ingress_security_configs["cidr_blocks"]
+    security_group_id = aws_security_group.security_group.id
+}*/
