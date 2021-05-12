@@ -10,3 +10,4 @@ credentials
 *.pem
 *.pub
 *.log
+*.sh
