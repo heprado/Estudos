@@ -33,5 +33,6 @@ variable region_subnet2_block {
 }
 
 variable workloads_vpcs_ids {
+    type = list
     description = "The ID of your workloads VPCs, this need to be passed to the make the peering connection between the Services VPC and Workloads VPCs"
 }

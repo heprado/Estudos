@@ -33,7 +33,7 @@ resource "aws_subnet" "region_subnet2" {
 }
 
 resource "aws_vpc_peering_connection" "vpc_peering_from_loadbalancer" {
-  peer_vpc_id   = var.workloads_vpcs_ids
+  for_each = toset(var.workloads_vpcs_ids)
+  peer_vpc_id   = each.key
   vpc_id        = aws_vpc.region_vpc.id 
-  peer_region   = "us-east-1"
 }

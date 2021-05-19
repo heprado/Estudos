@@ -18,7 +18,7 @@ module "region_2" {
 
 
 module "region_3_services" {
-    workloads_vpcs_ids = module.region_1.workload_vpc_id
+    workloads_vpcs_ids = [module.region_1.workload_vpc_id , module.region_2.workload_vpc_id]
     source = "./module_services"
     aws_region = "sa-east-1"
     region_vpc_cidr = "10.30.0.0/16"
