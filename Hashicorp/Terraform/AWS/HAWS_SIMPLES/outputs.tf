@@ -6,8 +6,11 @@ output "subnet2_az" {
     value = "The Subnet2 is deployed in the ${data.aws_availability_zones.available_zones.names[1]} Availability Zone."
 }
 
-output "ami_id" {
-    value = data.aws_ami.ec2_ami.*
+output "ami" {
+    value = {
+        AMI_ID = data.aws_ami.ec2_ami.image_id
+        Name = data.aws_ami.ec2_ami.name
+    }
 }
 
 output "ec2_1_config" {

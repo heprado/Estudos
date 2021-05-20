@@ -1,8 +1,20 @@
+
+
 locals {
+    ##Normalizing the variables inside a map
     tags = {
         Enviroment = var.tag_enviroment
         Team = var.tag_team
     }
+
+    ##The bucket name
+    bucket_random_name = lower("${var.tag_project}-${random_integer.bucket_randomizer.id}")
+}
+
+/*This resource generates an random integer that will be concatenated into the S3 Bucket name, because every S3 Bucket needs a unique name*/
+resource "random_integer" "bucket_randomizer" {
+    min = 1111
+    max = 9999
 }
 
 /* ############################ NETWORKING ############################ */
@@ -26,6 +38,7 @@ data "aws_availability_zones" "available_zones" {
 resource "aws_subnet" "subnet1" {
     availability_zone = data.aws_availability_zones.available_zones.names[0]
     vpc_id = aws_vpc.vpc.id
+    map_public_ip_on_launch = true
     cidr_block = var.subnet1_cidr
     tags = merge(local.tags, {Name : "${var.tag_project}-subnet1"})
 }
@@ -34,6 +47,7 @@ resource "aws_subnet" "subnet1" {
 resource "aws_subnet" "subnet2" {
     availability_zone = data.aws_availability_zones.available_zones.names[1]
     vpc_id = aws_vpc.vpc.id
+    map_public_ip_on_launch = true
     cidr_block = var.subnet2_cidr
     tags = merge(local.tags, {Name : "${var.tag_project}-subnet2"})
 }
@@ -150,6 +164,7 @@ resource "aws_instance" "webserver_1" {
 /*Creating the first Webserver*/
 
 resource "aws_instance" "webserver_2" {
+
     key_name = var.ssh_key_name
     ami = data.aws_ami.ec2_ami.id
     instance_type = var.instance_type
@@ -162,3 +177,41 @@ resource "aws_instance" "webserver_2" {
     }
 }
 
+/* ############################ S3 Bucket ############################ */
+
+resource "aws_s3_bucket" "logs_htmlstatic_s3" {
+
+    bucket = local.bucket_random_name
+    acl    = "private"
+
+    tags = merge(local.tags, {Name : "${var.tag_project}-s3_bucket"})
+
+}
+
+
+/* ############################ IAM Configuration ############################ */
+
+resource "aws_iam_policy" "ec2_policy" {
+  name        = "ec2_policy"
+  path        = "/"
+  description = "This policy let the EC2s instances to assume this role"
+
+  
+  policy = jsonencode(
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Effect": "Allow",
+              "Sid": ""
+            }
+          ]
+        }
+    )
+}
+/*Arrumar a bagaça abaixo*/
+/*error creating IAM policy ec2_policy: MalformedPolicyDocument: Policy document should not specify a principal*/
