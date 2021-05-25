@@ -37,3 +37,7 @@ variable volume_size {
 variable ssh_key_name {
     description = "Key name of an Key Pair created in your AWS account, if you don't have any just go to the EC2 Panel and create one and use the name here."
 }
+
+variable ec2_ami {
+    description = "The AMI ID that will be used to deploy your EC2 Instances"
+}

@@ -1,5 +1,3 @@
-
-
 locals {
     ##Normalizing the variables inside a map
     tags = {
@@ -124,34 +122,12 @@ resource "aws_security_group" "ec2_sg" {
 
 /* ############################ COMPUTING ############################ */
 
-
-/*Getting the AMI that we will use to deploy the EC2s*/
-data "aws_ami" "ec2_ami" {
-  most_recent      = true
-  owners           = ["self","amazon","aws-marketplace"]
-
-  filter {
-    name   = "name"
-    values = ["${var.distro}*"]
-  }
-
-  filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-}
-
-
 /*Creating the first Webserver*/
 
 resource "aws_instance" "webserver_1" {
     key_name = var.ssh_key_name
-    ami = data.aws_ami.ec2_ami.id
+    ami = var.ec2_ami
+    iam_instance_profile = aws_iam_instance_profile.webservers_profile.name
     instance_type = var.instance_type
     vpc_security_group_ids = [aws_security_group.ec2_sg.id]
     subnet_id = aws_subnet.subnet1.id
@@ -159,6 +135,45 @@ resource "aws_instance" "webserver_1" {
     root_block_device {
         volume_size = var.volume_size
     }
+
+    ##Using the connection resource to connect to the EC2
+    connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ubuntu"
+    private_key = file("${path.root}/ssh_keys/${var.ssh_key_name}")
+
+  }
+
+  ##This will create a file inside the EC2, this file will be used by s3cmd to write the nginx logs into the S3 Bucket, and to download the HTML files
+  ##s3cmd get the access key and secret key magically with the metadata of the EC2 Instance Profile.
+provisioner "file" {
+    content = <<EOF
+  access_key =
+  secret_key =
+  security_token =
+
+  EOF
+
+    destination = "~/.s3cfg"
+  }
+
+provisioner "file" {
+    content = <<EOF
+  /var/log/nginx/*log {
+    daily
+    rotate 10
+    missingok
+    dateext
+    compress
+    sharedscripts
+    endscript
+}
+EOF
+
+
+    destination = "~./nginx"
+  }
 }
 
 /*Creating the first Webserver*/
@@ -166,7 +181,8 @@ resource "aws_instance" "webserver_1" {
 resource "aws_instance" "webserver_2" {
 
     key_name = var.ssh_key_name
-    ami = data.aws_ami.ec2_ami.id
+    ami = var.ec2_ami
+    iam_instance_profile = aws_iam_instance_profile.webservers_profile.name
     instance_type = var.instance_type
     vpc_security_group_ids = [aws_security_group.ec2_sg.id]
     subnet_id = aws_subnet.subnet2.id
@@ -179,6 +195,7 @@ resource "aws_instance" "webserver_2" {
 
 /* ############################ S3 Bucket ############################ */
 
+/*Creating the S3 bucket for the logs and static html files, we are creating it as private but we will give access to them with IAM Policies*/
 resource "aws_s3_bucket" "logs_htmlstatic_s3" {
 
     bucket = local.bucket_random_name
@@ -191,27 +208,59 @@ resource "aws_s3_bucket" "logs_htmlstatic_s3" {
 
 /* ############################ IAM Configuration ############################ */
 
-resource "aws_iam_policy" "ec2_policy" {
-  name        = "ec2_policy"
+/*This IAM Role let the EC2 service to assume the role.*/
+resource "aws_iam_role" "ec2_role" {
+  name        = "${var.tag_project}-ec2_role"
   path        = "/"
-  description = "This policy let the EC2s instances to assume this role"
+  description = "This let the EC2s instances to assume this role"
 
-  
-  policy = jsonencode(
-        {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Action": "sts:AssumeRole",
-              "Principal": {
-                "Service": "ec2.amazonaws.com"
-              },
-              "Effect": "Allow",
-              "Sid": ""
-            }
-          ]
-        }
-    )
+  /*This is the assume role, this let the EC2 service to assume this role.*/
+  assume_role_policy = jsonencode({
+  Version =  "2012-10-17",
+  Statement = [
+      {   Sid = "",
+          Effect =  "Allow",
+          Action =  "sts:AssumeRole",
+          Principal = {
+              Service = "ec2.amazonaws.com"
+          }
+           
+      }
+  ]
+})  
+
+tags = merge(local.tags, {Name : "${var.tag_project}-"})
 }
-/*Arrumar a bagaça abaixo*/
-/*error creating IAM policy ec2_policy: MalformedPolicyDocument: Policy document should not specify a principal*/
+
+/*This create a policy inside the role above, this policy let our EC2s do everything it needs on the S3 Bucket*/
+resource "aws_iam_role_policy" "allow_s3_all" {
+  name = "${var.tag_project}-allow_s3_all_policy"
+  /*Passing the role that this policy will be created*/
+  role = aws_iam_role.ec2_role.name
+  /*The policy itself.*/
+  policy = jsonencode(
+    {
+  Version =  "2012-10-17",
+  Statement = [
+    {
+      Action =  [
+        "s3:*"
+      ],
+      Effect = "Allow",
+      Resource = [
+                "arn:aws:s3:::${aws_s3_bucket.logs_htmlstatic_s3.bucket}",
+                "arn:aws:s3:::${aws_s3_bucket.logs_htmlstatic_s3.bucket}/*"
+            ]
+    }
+  ]
+}
+)
+}
+
+/*This create a IAM Instance Profile, so the EC2 can access the Role that will give access to the S3 Bucket*/
+resource "aws_iam_instance_profile" "webservers_profile" {
+  name = "${var.tag_project}-webservers_profile"
+  role = aws_iam_role.ec2_role.name
+
+  tags = merge(local.tags, {Name : "${var.tag_project}-webserver_profile"})
+}
