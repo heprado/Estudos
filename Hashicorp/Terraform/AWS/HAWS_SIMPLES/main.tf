@@ -141,13 +141,13 @@ resource "aws_instance" "webserver_1" {
     type        = "ssh"
     host        = self.public_ip
     user        = "ubuntu"
-    private_key = file("${path.root}/ssh_keys/${var.ssh_key_name}")
+    private_key = file("${path.root}/ssh_keys/${var.ssh_key_name}.pem")
 
   }
 
   ##This will create a file inside the EC2, this file will be used by s3cmd to write the nginx logs into the S3 Bucket, and to download the HTML files
   ##s3cmd get the access key and secret key magically with the metadata of the EC2 Instance Profile.
-provisioner "file" {
+    provisioner "file" {
     content = <<EOF
   access_key =
   secret_key =
@@ -158,7 +158,7 @@ provisioner "file" {
     destination = "~/.s3cfg"
   }
 
-provisioner "file" {
+  provisioner "file" {
     content = <<EOF
   /var/log/nginx/*log {
     daily
@@ -167,15 +167,34 @@ provisioner "file" {
     dateext
     compress
     sharedscripts
+    postrotate
     endscript
+    lastaction
+        INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+        sudo /usr/local/bin/s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
 }
 EOF
 
 
-    destination = "~./nginx"
+    destination = "~/nginx"
+  }
+
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt get update",
+      "sudo apt install nginx s3cmd -y",
+      "sudo service nginx start",
+      "sudo cp ~/nginx /etc/logrotate.d/nginx",
+      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
+      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.png .",
+      "sudo rm /usr/share/nginx/html/index.html",
+      "sudo cp ~/index.html /usr/share/nginx/html/index.html",
+      "sudo cp ~/chuu.png /usr/share/nginx/html/chuu.png",
+      "sudo logrotate -f /etc/logrotate.conf"
+    ]
   }
 }
-
 /*Creating the first Webserver*/
 
 resource "aws_instance" "webserver_2" {
@@ -191,6 +210,62 @@ resource "aws_instance" "webserver_2" {
     root_block_device {
         volume_size = var.volume_size
     }
+  ##Using the connection resource to connect to the EC2
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ubuntu"
+    private_key = file("${path.root}/ssh_keys/${var.ssh_key_name}.pem")
+
+  }
+
+  provisioner "file" {
+    content = <<EOF
+  access_key =
+  secret_key =
+  security_token =
+
+  EOF
+
+    destination = "~/.s3cfg"
+  }
+
+  provisioner "file" {
+    content = <<EOF
+  /var/log/nginx/*log {
+    daily
+    rotate 10
+    missingok
+    dateext
+    compress
+    sharedscripts
+    postrotate
+    endscript
+    lastaction
+        INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+        sudo /usr/local/bin/s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
+}
+EOF
+
+
+    destination = "~/nginx"
+  }
+
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt get update",
+      "sudo apt install nginx s3cmd -y",
+      "sudo service nginx start",
+      "sudo cp ~/nginx /etc/logrotate.d/nginx",
+      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
+      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.jfif .",
+      "sudo rm /usr/share/nginx/html/index.html",
+      "sudo cp ~/index.html /usr/share/nginx/html/index.html",
+      "sudo cp ~/chuu.png /usr/share/nginx/html/chuu.png",
+      "sudo logrotate -f /etc/logrotate.conf"
+    ]
+  }
 }
 
 /* ############################ S3 Bucket ############################ */
@@ -204,6 +279,20 @@ resource "aws_s3_bucket" "logs_htmlstatic_s3" {
     tags = merge(local.tags, {Name : "${var.tag_project}-s3_bucket"})
 
 }
+
+resource "aws_s3_bucket_object" "index" {
+    bucket = aws_s3_bucket.logs_htmlstatic_s3.bucket
+    key = "/website/index.html"
+    source = "${path.root}/HTML/index.html"
+
+  }
+
+  resource "aws_s3_bucket_object" "image" {
+    bucket = aws_s3_bucket.logs_htmlstatic_s3.bucket
+    key = "/website/chuu.jfif"
+    source = "${path.root}/HTML/chuu.jfif"
+
+  }
 
 
 /* ############################ IAM Configuration ############################ */
@@ -264,3 +353,4 @@ resource "aws_iam_instance_profile" "webservers_profile" {
 
   tags = merge(local.tags, {Name : "${var.tag_project}-webserver_profile"})
 }
+
