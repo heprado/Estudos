@@ -186,15 +186,15 @@ EOF
       "sudo apt update",
       "sudo apt-get update",
       "sudo apt-get install nginx pip -y",
-      "sudo pip install s3cmd",
       "sudo apt upgrade -y ",
-      "sudo service nginx start",
+      "sudo pip install s3cmd",
       "sudo cp ~/nginx /etc/logrotate.d/nginx",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.jfif .",
-      "sudo rm /usr/share/nginx/html/index.html",
-      "sudo cp ~/index.html /usr/share/nginx/html/index.html",
-      "sudo cp ~/chuu.jfif /usr/share/nginx/html/chuu.jfif",
+      "sudo rm /var/www/html/* ",
+      "sudo cp ~/index.html /var/www/html/index.html",
+      "sudo cp ~/chuu.jfif /var/www/html/chuu.jfif",
+      "sudo service nginx start",
       "sudo logrotate -f /etc/logrotate.conf"
     ]
   }
@@ -265,13 +265,13 @@ EOF
       "sudo apt-get install nginx pip -y",
       "sudo apt upgrade -y ",
       "sudo pip install s3cmd",
-      "sudo service nginx start",
       "sudo cp ~/nginx /etc/logrotate.d/nginx",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.jfif .",
-      "sudo rm /usr/share/nginx/html/index.html",
-      "sudo cp ~/index.html /usr/share/nginx/html/index.html",
-      "sudo cp ~/chuu.jfif /usr/share/nginx/html/chuu.jfif",
+      "sudo rm /var/www/html/* ",
+      "sudo cp ~/index.html /var/www/html/index.html",
+      "sudo cp ~/chuu.jfif /var/www/html/chuu.jfif",
+      "sudo service nginx start",
       "sudo logrotate -f /etc/logrotate.conf"
     ]
   }
@@ -284,7 +284,7 @@ resource "aws_s3_bucket" "logs_htmlstatic_s3" {
 
     bucket = local.bucket_random_name
     acl    = "private"
-
+    force_destroy = true
     tags = merge(local.tags, {Name : "${var.tag_project}-s3_bucket"})
 
 }
