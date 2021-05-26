@@ -171,7 +171,8 @@ resource "aws_instance" "webserver_1" {
     endscript
     lastaction
         INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
-        sudo /usr/local/bin/s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
+        sudo s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
+    endscript
 }
 EOF
 
@@ -182,15 +183,18 @@ EOF
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt get update",
-      "sudo apt install nginx s3cmd -y",
+      "sudo apt update",
+      "sudo apt-get update",
+      "sudo apt-get install nginx pip -y",
+      "sudo pip install s3cmd",
+      "sudo apt upgrade -y ",
       "sudo service nginx start",
       "sudo cp ~/nginx /etc/logrotate.d/nginx",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
-      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.png .",
+      "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.jfif .",
       "sudo rm /usr/share/nginx/html/index.html",
       "sudo cp ~/index.html /usr/share/nginx/html/index.html",
-      "sudo cp ~/chuu.png /usr/share/nginx/html/chuu.png",
+      "sudo cp ~/chuu.jfif /usr/share/nginx/html/chuu.jfif",
       "sudo logrotate -f /etc/logrotate.conf"
     ]
   }
@@ -224,6 +228,7 @@ resource "aws_instance" "webserver_2" {
   access_key =
   secret_key =
   security_token =
+  use_https = True
 
   EOF
 
@@ -243,7 +248,8 @@ resource "aws_instance" "webserver_2" {
     endscript
     lastaction
         INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
-        sudo /usr/local/bin/s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
+        sudo s3cmd sync --config=~/.s3cfg /var/log/nginx/ s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/nginx/$INSTANCE_ID/
+    endscript
 }
 EOF
 
@@ -254,15 +260,18 @@ EOF
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt get update",
-      "sudo apt install nginx s3cmd -y",
+      "sudo apt update",
+      "sudo apt-get update",
+      "sudo apt-get install nginx pip -y",
+      "sudo apt upgrade -y ",
+      "sudo pip install s3cmd",
       "sudo service nginx start",
       "sudo cp ~/nginx /etc/logrotate.d/nginx",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/index.html .",
       "s3cmd get s3://${aws_s3_bucket.logs_htmlstatic_s3.id}/website/chuu.jfif .",
       "sudo rm /usr/share/nginx/html/index.html",
       "sudo cp ~/index.html /usr/share/nginx/html/index.html",
-      "sudo cp ~/chuu.png /usr/share/nginx/html/chuu.png",
+      "sudo cp ~/chuu.jfif /usr/share/nginx/html/chuu.jfif",
       "sudo logrotate -f /etc/logrotate.conf"
     ]
   }
