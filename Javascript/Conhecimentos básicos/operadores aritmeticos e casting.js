@@ -88,3 +88,22 @@ let numero2 = Number('5')
 
 //Casting de numero pra string.
 let numeroparastring = String(1234)
+
+
+//Calculando Raiz Quadrada
+
+let raiz = 144 ** 0.5
+
+console.log(raiz)
+
+//Dividindo por Zero
+
+//Na maioria das linguaguens de programação, dividir por 0 te retorna
+//uma exceção no código como ZeroDivision etc, já no javascript é diferente:
+
+
+let zerodivision = 100 / 0
+
+console.log(zerodivision)
+//Output: Infinity
+
