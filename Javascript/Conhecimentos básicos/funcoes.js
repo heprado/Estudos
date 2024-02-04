@@ -2,7 +2,7 @@
 let count = 0
 
 //Função padrão
-//function nome(parametros = valor_padrao) {corpo da funcao}
+//function nome(parametros = argumento_padrao) {corpo da funcao}
 function saudacao(nome = "Anônimo") {
 
     //Incrementando o contador cada vez que a função for chamada
@@ -39,7 +39,7 @@ const minha_soma = soma(12,12);
 console.log(minha_soma)
 
 //Função flecha (arrow function)
-//nome = (parametros = valor_padrao) => {corpo da funcao}
+//nome = (parametros = argumento_padrao) => {corpo da funcao}
 const raiz = (numero = 4) => {
     return numero ** 0.5;
 };
@@ -50,7 +50,7 @@ const minha_raiz = raiz()
 console.log(minha_raiz)
 
 //Função flecha simplificada 
-//nome = (parametros = valor_padrao) => retorno
+//nome = (parametros = argumento_padrao) => retorno
 const multiplicar = (numero1 = 0 , numero2 = 0) => numero1 * numero2;
 
 //Constante com o valor retorna pela função flecha simplificada

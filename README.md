@@ -5,6 +5,7 @@ Vou postar meus estudos sobre linguagens de programação como:
 	-CSharp 
 	-Python 
 	-JavaScript
+	-HCL(Hashicorp Configuration Languague)
 	
 
 
