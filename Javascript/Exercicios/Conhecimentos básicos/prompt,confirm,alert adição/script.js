@@ -10,7 +10,6 @@ elas como funções comuns do Javascript como abaixo:
 alert(`${a} + ${b} = ${a+b}`);
 
 
-
 */
 
 const a =Number(prompt("Digite um número:"));

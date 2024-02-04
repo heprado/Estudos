@@ -30,6 +30,7 @@ String Indexes
 
 
 
+
 //Toda string no javascript é um array de chars, então podemos referenciar qual valor queremos da string através de indices
 //isso é legal de se usar quando estamos usando algum tipo de loop como for e while.
 

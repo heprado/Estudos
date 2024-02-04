@@ -1,11 +1,11 @@
 let nomeAluno; // é um objeto undefined
-const sobreNomeAluno = null; // é um objeto undefined tbm
+const sobreNomeAluno = null; // é um objeto undefined também
 
-console.log(typeof nomeAluno, nomeAluno);
+console.log(`Tipo:${typeof nomeAluno}, Valor: ${nomeAluno}`);
 //Output:
-//undefined undefined
+//type:undefined : value:undefined
 
-console.log(typeof sobreNomeAluno,sobreNomeAluno);
+console.log(`Tipo:${typeof sobreNomeAluno}, Valor:${sobreNomeAluno}`);
 //Output:
 //object null
 //O tipo dele ser como objeto é um bug do js pois na spec do js
