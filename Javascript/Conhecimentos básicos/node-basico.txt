@@ -1,5 +1,0 @@
-Node é um compilador de códigos javascript, ele 
-utilizada a mesma engine do google chrome para
-rodar os códigos e interagir diretamente com o
-sistema operacional.
-
