@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IMC Formulario</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+
+            body {
+                height:100vh;
+                width:100vw;
+                display:flex;
+                justify-content:center;
+            }
+            form {
+                
+                width:20%;
+                height:50%;
+                display:flex;
+                justify-content:center;
+                flex-direction:column;
+                gap:2%;
+                
+            }
+        </style>
+    </head>
+    <body>
+        <form id="imc" onsubmit="calcular_imc(); return false;">
+            <label for="nome" >Nome:</label>
+            <input id="nome" required></input>
+            <label for="sobrenome">Sobrenome:</label>
+            <input id="sobrenome" required></input>
+            <label for="peso">Peso:</label>
+            <input id="peso" required pattern="\d+.\d+|\d+"></input>
+            <label for="altura" >Altura:</label>
+            <input id="altura" required pattern="\d+.\d+|\d+"></input>
+            <input type="submit" value="Calcular IMC"></input>
+        </form>
+        
+        <script src="imc.js" async defer></script>
+    </body>
+</html>
