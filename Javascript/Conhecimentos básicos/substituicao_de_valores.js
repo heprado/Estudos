@@ -12,7 +12,7 @@ let a = "a";
 let b = "b";
 let c = "c";
 
-//Constante para guardar temporariamente o valor para salvarmos ele antes dele ser subscrito.
+//Variavel para guardar temporariamente o valor para salvarmos ele antes dele ser subscrito.
 let saver;
 
 //Salvando A na variavel temporaria
