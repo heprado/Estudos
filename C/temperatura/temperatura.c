@@ -6,8 +6,8 @@
 #define BASE_FAHRENHEIT 32.0
 
 /*Temperatura em cada escala em que a agua ferve*/
-#define MAXIMO_CELSIUS 100.0 * 2
-#define MAXIMO_KELVIN 373.0 * 2
+#define MAXIMO_CELSIUS 100.0 
+#define MAXIMO_KELVIN 373.0 
 #define MAXIMO_FAHRENHEIT 212.0
 
 
