@@ -2,7 +2,7 @@ print("Bem vindo ao jogo Fizzbuzz! \nUm jogo em que printamos fizz quando o núm
 
 quant = int(input("Digite até qual número vamos printar: "))
 
-def fizzbuzz(quant):
+def fizzbuzz(quant:int):
     for i in range(1,quant+1):
         if i%3 == 0 and i%5 == 0:
             print(i,"Fizzbuzz")

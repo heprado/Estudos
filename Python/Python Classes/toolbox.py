@@ -1,7 +1,7 @@
 import json
 
 class User:
-    def create_user(self,name,age):
+    def create_user(self,name:str,age:str):
         
         with open("users.json","r") as file:
             dicionario = json.load(file)
