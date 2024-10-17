@@ -13,8 +13,9 @@ int main () {
     int palavra = SEPARADOR_ENCONTRADO;
     
     // TODO
-    printf("Escreva palavras e aperte ENTER, vamos mostrar cada palavra em uma linha:\n");
-    printf("Aperte CTRL + C para sair.\n");
+    printf("Escreva palavras e aperte \e[1;32m ENTER \e[0m, vamos mostrar cada palavra em uma linha:\n");
+    printf("Aperte \e[1;32m CTRL + C \e[0m para sair.\n");
+    printf("Não tá pronto...\n");
 
     while ((caracter = getchar()) != EOF) {
         
