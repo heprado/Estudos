@@ -3,7 +3,7 @@
 
 int main () {
     
-    char oi = 'oieee';
+    int oi = 'oieee';
 
     printf("%d",oi);
 

@@ -5,7 +5,8 @@
 #define BACKSPACE 8
 #define BACKSLASH 92
 
-//Não deu certo com backspace como pede no livro, eu precisaria ou da curses(linux) ou da conio(windows) para executar.
+//Não deu certo com backspace como pede no livro, eu precisaria ou da curses(linux) ou da conio(windows) para executar ai eu só decidi não fazer mesmo de desgosto, mas depois eu vou tentar fazer uma versão que funciona pros dois usando uns ifndef sei la uns negocio assim eu preciso entender ainda...
+
 int main () {
 
     int c;
