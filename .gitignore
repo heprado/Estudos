@@ -13,3 +13,4 @@ credentials
 *.sh
 .vscode/settings.json
 .vscode/tasks.json
+target/
