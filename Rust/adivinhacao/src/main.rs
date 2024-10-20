@@ -34,7 +34,7 @@ fn main() {
             .read_line(&mut escolha) //Passando a escolha por referencia (mutavel) para o readline
             .expect("Erro ao ler a linha.");
 
-        //Pega a string do resultado, remove os separadores e transforma a string em um u32, sempre o tipo que você definir na variável que será o tipo que o parse tentará transformar.
+        //Pega a string do resultado, remove os espaços em branco e transforma a string em um u32, sempre o tipo que você definir na variável que será o tipo que o parse tentará transformar.
         //Parse retorna um Result<Ok,Err>
         let escolha: u32 = match escolha.trim().parse() {
             //Pega o valor retornado caso tenha sido OK. 
