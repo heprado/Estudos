@@ -11,6 +11,6 @@ credentials
 *.pub
 *.log
 *.sh
-.vscode/settings.json
-.vscode/tasks.json
 target/
+.idea
+.vscode
