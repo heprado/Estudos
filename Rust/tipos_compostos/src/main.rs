@@ -7,7 +7,8 @@ fn main() {
     let tup:(u8,u8,u8) = (1,2,3);
 
     //Descontruindo os valores de dentro da variavel tup em 3 variaveis.
-    let (x,y,z) = tup;
+    //Underline somente para o compilar ignorar que não estamos usando essas variaveis.
+    let (_x,_y,_z) = tup;
 
     //Caso formos tipar uma variavel que contem um array
     //Precisamos especificar o tipo dos valores do array e o tamanho dele
@@ -25,6 +26,6 @@ fn main() {
     vec.push(12);
 
     println!("Tupla: {:#?}\n\
-    Array: {:#?}\n
-    Vetor:{:#?}",tup,arr,vec);
+    Array: {:#?}\n\
+    Vetor: {:#?}",tup,arr,vec);
 }
