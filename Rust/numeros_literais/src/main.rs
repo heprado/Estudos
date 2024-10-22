@@ -11,9 +11,9 @@ fn main() {
     let byte = b'\xFF';
 
     println!("{}\n\
-    {}\n\
-    {}\n\
-    {}\n\
+    {}\n
+    {}\n
+    {}\n
     {}",decimal,octal,hexadecimal,binario,byte);
 
 }
