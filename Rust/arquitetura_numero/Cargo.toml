@@ -1,0 +1,6 @@
+[package]
+name = "arquitetura_numero"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
