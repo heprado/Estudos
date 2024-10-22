@@ -8,12 +8,12 @@ fn main() {
 
     let binario = 0b1111_1111;
 
-    let byte = b'0';
+    let byte = b'\xFF';
 
     println!("{}\n\
     {}\n\
     {}\n\
     {}\n\
-    {}",decimal,octal,hexadecimal,binario,binario);
+    {}",decimal,octal,hexadecimal,binario,byte);
 
 }
