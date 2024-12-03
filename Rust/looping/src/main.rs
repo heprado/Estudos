@@ -1,4 +1,19 @@
 
+fn for_loop() {
+
+    let arr:[u8;3] = [1,2,3];
+
+    //Loop até o final de um array
+    for i in arr {
+        println!("{}", i);
+    }
+
+    //Loop até o final de um Range definido na declaração do loop.
+    for i in 1..4 {
+        println!("{}", i);
+    }
+}
+
 fn while_condicional () {
 
     let mut num = 0;
