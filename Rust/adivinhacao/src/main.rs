@@ -26,8 +26,6 @@ fn main() {
         //new() é uma função implementada no Tipo String
         let mut escolha = String::new();
 
-
-        
         
         //Começa a ler o STDIN.
         io::stdin()
