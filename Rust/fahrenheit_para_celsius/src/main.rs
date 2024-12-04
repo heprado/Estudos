@@ -5,7 +5,9 @@ const BASE_FAHRENHEIT:f32 = 32.0;
 const BASE_CELSIUS:f32 = 0.0;
 const BASE_KELVIN:f32 = 273.15;
 
-
+const MAX_CELSIUS:f32 = 100.0;
+const MAX_KELVIN:f32 = 373.0;
+const MAX_FAHRENHEIT:f32 = 212.0;
 
 fn celsius_para_fahrenheit() {
 
@@ -26,9 +28,15 @@ fn celsius_para_fahrenheit() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Celsius é {}º em Fahrenheit\n",celsius,(1.8 * celsius) + BASE_FAHRENHEIT);
+        let result:f32 = (1.8 * celsius) + BASE_FAHRENHEIT;
+        println!("\n🌡️ Temperatura {}º em Celsius é {}º em Fahrenheit\n",celsius,result);
 
-
+        if result >= MAX_FAHRENHEIT {
+            println!("🔥 Água vai começar a evaporar.\n")
+        }
+        else if result <= BASE_FAHRENHEIT {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
         break
     }
 
@@ -53,7 +61,16 @@ fn celsius_para_kelvin() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Celsius é {}º em Fahrenheit\n",celsius, celsius + BASE_KELVIN);
+        let result:f32 = celsius + BASE_KELVIN;
+
+        println!("\n🌡️ Temperatura {}º em Celsius é {}º em Fahrenheit\n",celsius, result);
+
+        if result >= MAX_KELVIN {
+            println!("🔥 Água vai evaporar.\n")
+        }
+        else if result <= BASE_KELVIN {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
 
         break
     }
@@ -78,7 +95,17 @@ fn fahrenheit_para_celsius() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Fahrenheit é {}º em Celsius\n",fahrenheit,(fahrenheit - BASE_FAHRENHEIT) / 1.8);
+        let result = (fahrenheit - BASE_FAHRENHEIT) / 1.8;
+
+        println!("\n🌡️ Temperatura {}º em Fahrenheit é {}º em Celsius\n",fahrenheit,result);
+
+
+        if result >= MAX_CELSIUS {
+            println!("🔥 Água vai evaporar.\n")
+        }
+        else if result <= BASE_CELSIUS {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
 
         break
     }
@@ -105,7 +132,16 @@ fn fahrenheit_para_kelvin() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Fahrenheit é {}º em Kelvin\n",fahrenheit,(fahrenheit - BASE_FAHRENHEIT) * 0.5555555555555556 + BASE_KELVIN );
+        let result :f32 = (fahrenheit - BASE_FAHRENHEIT) * 0.5555555555555556 + BASE_KELVIN;
+
+        println!("\n🌡️ Temperatura {}º em Fahrenheit é {}º em Kelvin\n",fahrenheit,result);
+
+        if result >= MAX_KELVIN {
+            println!("🔥 Água vai evaporar.\n")
+        }
+        else if result <= BASE_KELVIN {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
 
         break
     }
@@ -132,7 +168,15 @@ fn kelvin_para_celsius() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Kelvin é {}º em Celsius\n",kelvin, kelvin - BASE_KELVIN );
+        let result = kelvin - BASE_KELVIN;
+        println!("\n🌡️ Temperatura {}º em Kelvin é {}º em Celsius\n",kelvin,result);
+
+        if result >= MAX_CELSIUS {
+            println!("🔥 Água vai evaporar.\n")
+        }
+        else if result <= BASE_CELSIUS {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
 
         break
     }
@@ -155,7 +199,16 @@ fn kelvin_para_fahrenheit() {
             }
         };
 
-        println!("\n🌡️ Temperatura {}º em Kelvin é {}º em Fahrenheit\n", kelvin, (kelvin - BASE_KELVIN) * 1.8 + BASE_FAHRENHEIT);
+        let result:f32 = (kelvin - BASE_KELVIN) * 1.8 + BASE_FAHRENHEIT;
+
+        println!("\n🌡️ Temperatura {}º em Kelvin é {}º em Fahrenheit\n", kelvin, result);
+
+        if result >= MAX_FAHRENHEIT {
+            println!("🔥 Água vai evaporar.\n")
+        }
+        else if result <= BASE_FAHRENHEIT {
+            println!("🧊 Água vai começar a congelar.\n")
+        }
 
         break
     }
