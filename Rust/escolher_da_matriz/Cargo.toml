@@ -1,0 +1,6 @@
+[package]
+name = "escolher_da_matriz"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

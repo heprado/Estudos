@@ -2,7 +2,7 @@ use std::io;
 
 
 const BASE_FAHRENHEIT:f32 = 32.0;
-const BASE_CELSIUS:f32 = 212.0;
+
 
 fn fahrenheit_para_celsius() {
 
@@ -18,12 +18,12 @@ fn fahrenheit_para_celsius() {
         let fahrenheit:f32 = match input.trim().parse(){
             Ok(num) => num,
             Err(_) => {
-                println!("Er ao ler a fahrenheit");
+                println!("Erro ao ler a fahrenheit");
                 continue;
             }
         };
 
-        println!("Temperatura {} em Fahrenheit é {} em Celsius",fahrenheit,(fahrenheit - BASE_FAHRENHEIT) / 1.8);
+        println!("🌡️ Temperatura {} em Fahrenheit é {} em Celsius\n",fahrenheit,(fahrenheit - BASE_FAHRENHEIT) / 1.8);
 
         break
     }
@@ -46,12 +46,13 @@ fn celsius_para_fahrenheit() {
         let celsius:f32 = match input.trim().parse() {
             Ok(num) => num,
             Err(_) => {
-                println!("Erro ao ler a linha.");
+                println!("Erro ao ler celsius.");
                 continue
             }
         };
 
-        println!("Temperatura {} em Celsius é {} em Fahrenheit",celsius,(1.8 * celsius) + BASE_FAHRENHEIT);
+        println!("🌡️ Temperatura {} em Celsius é {} em Fahrenheit\n",celsius,(1.8 * celsius) + BASE_FAHRENHEIT);
+
 
         break
     }
