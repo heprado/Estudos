@@ -1,5 +1,5 @@
 [package]
-name = "fahrenheit_para_celsius"
+name = "temp_calc"
 version = "0.1.0"
 edition = "2021"
 

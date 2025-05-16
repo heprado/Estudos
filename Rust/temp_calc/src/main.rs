@@ -11,7 +11,6 @@ const MAX_FAHRENHEIT:f32 = 212.0;
 
 fn celsius_para_fahrenheit() {
 
-
     loop {
 
         println!("Digite a temperatura em Celsius:");
