@@ -14,7 +14,7 @@ fn main() {
 
     println!("Adivinhe o número entre 1 e {} ",u128::MAX);
 
-    //Roda infitamente.
+    //Roda infinitamente.
     loop {
 
         if tentativas < 1 {
@@ -31,9 +31,9 @@ fn main() {
         // \x1b[0m é RESETAR A COR.
         println!("\nPor favor insira sua escolha e aperte \x1b[32mEnter\x1b[0m");
 
-        //Let cria uma variavel que só existe neste escopo
-        //essa variavel é mutavel por conta do mut
-        //todas as variaveis em Rust são imutaveis por padrão.
+        //Let cria uma variável que só existe neste escopo
+        //essa variável é mutável por conta do mut
+        //todas as variáveis em Rust são imutáveis por padrão.
         //Imutabilidade sendo o valor dela poder ser alterado.
         //new() é uma função implementada no Tipo String
         let mut escolha = String::new();

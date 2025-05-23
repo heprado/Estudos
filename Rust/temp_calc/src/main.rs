@@ -1,10 +1,8 @@
 use std::io;
 
-
 const BASE_FAHRENHEIT:f32 = 32.0;
 const BASE_CELSIUS:f32 = 0.0;
 const BASE_KELVIN:f32 = 273.15;
-
 const MAX_CELSIUS:f32 = 100.0;
 const MAX_KELVIN:f32 = 373.0;
 const MAX_FAHRENHEIT:f32 = 212.0;
