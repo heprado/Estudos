@@ -64,7 +64,7 @@ fn vetores() {
 
 
 //Vetores só podem armazenar um tipo.
-//Se definirmos um Enum com vários tipos dentro dele, podemos usar ele como Tipo do Vec.
+//Se definirmos um Enum com várias variações dentro dele, podemos usar ele como o tipo do Vec.
 //Permitindo termos valores diferentes dentro do Vec, mesmo todos sendo do tipo VecValues.
 #[derive(Debug)]
 enum VecValues {
@@ -94,4 +94,16 @@ fn vec_multi_valorado() {
     );
 
     println!("{:#?}",vec)
+
+    //[
+    //     Number(
+    //         20,
+    //     ),
+    //     String(
+    //         "hello",
+    //     ),
+    //     Boolean(
+    //         true,
+    //     ),
+    //]
 }
